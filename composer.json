@@ -1,0 +1,24 @@
+{
+	"config": {
+		"soft-packages": true
+	},
+	"require":{
+		"php":"<7.0.0"
+	},
+	"autoload":{
+		"psr-4":{
+			"http\\":"src/http/",
+			"Template\\":"src/template/",
+			"Cells\\":"src/cells/"
+		}
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^4.8"
+	},
+	"scripts" : {
+		"php-ver" : "php -v"
+	},
+	"remember" : {
+		"project" : "cd ../../../d/OpenServer/domains/test"
+	}
+}
