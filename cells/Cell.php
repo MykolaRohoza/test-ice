@@ -38,13 +38,21 @@
 			 * Произведение колличества отличающихся строк и колличества отличяющися столцов должно быть равно 
 			 * count($places)
 			 */
+			$different_rows = [];
+			$different_cells = [];
+			
 			foreach ($places as $place) {
 				$num_row = floor(($place - 1)/ $this->cols) + 1; 
 				$num_cell = $place - $this->cols * ($num_row - 1); 
-				
+				if(!in_array($place, $different_cells)){
+					$different_cells[] = $place;
+				}
+				if(!in_array($place, $different_rows)){
+					$different_rows[] = $place;
+				}
 				$tmp_places[] = 'r' . $num_row . '|c' . $num_cell;
 			}
-			var_dump($tmp_places);
+			var_dump($tmp_places, $different_rows, $different_cells);die;
 			if($this->checkPlaces($places)){
 				$this->places = $places; 
 			} else {
