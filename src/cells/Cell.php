@@ -33,6 +33,11 @@
 			$places[] = 8;
 			$places[] = 9;
 
+			
+			/*
+			 * Произведение колличества отличающихся строк и колличества отличяющися столцов должно быть равно 
+			 * count($places)
+			 */
 			foreach ($places as $place) {
 				$num_row = floor(($place - 1)/ $this->cols) + 1; 
 				$num_cell = $place - $this->cols * ($num_row - 1); 
