@@ -6,8 +6,9 @@
 		
 		protected $cols; 
 		protected $rows; 
-		
-		protected $text = "";
+		protected $different_cells = []; 
+		protected $different_rows = []; 
+		protected $text = "-";
 		/**
 		 * cells
 		 */
@@ -58,36 +59,33 @@
 		}
 		protected function checkRectangle($places)
 		{
-			$tmp_places = array();
-			
-			/*
-			 * Произведение колличества отличающихся строк и колличества отличяющися столцов должно быть равно 
-			 * count($places)
-			 */
-			$different_rows = [];
-			$different_cells = [];
-			
+			$this->setDifferentSides($places);
+
+			if(count($places) != (count($this->different_cells) * count($this->different_rows))){
+				$this->errors[] = 'Произведение колличества отличающихся строк и колличества отличяющися столцов должно быть равно count($places) ';
+				return false;
+			}
+			return true;
+		}
+		protected function setDifferentSides($places)
+		{
+			$tmp_places = [];
 			foreach ($places as $place) {
 				$num_row = floor(($place - 1)/ $this->cols) + 1; 
 				$num_cell = $place - $this->cols * ($num_row - 1); 
 				
-				if(!in_array($num_row, $different_rows)){
-					$different_rows[] = $num_row;
+				if(!in_array($num_row, $this->different_rows)){
+					$this->different_rows[] = $num_row;
 				}
-				if(!in_array($num_cell, $different_cells)){
-					$different_cells[] = $num_cell;
+				if(!in_array($num_cell, $this->different_cells)){
+					$this->different_cells[] = $num_cell;
 				}
 				
 				$tmp_places[] = 'r' . $num_row . '|c' . $num_cell;
 				var_dump('r' . $num_row . '|c' . $num_cell) ; echo '<br>';
 			}
-			
-			if(count($places) != count($different_cells) * count($different_rows)){
-				$this->errors[] = 'Произведение колличества отличающихся строк и колличества отличяющися столцов должно быть равно count($places) ';
-			
-				return false;
-			}
 		}
+
 		public function getText()
 		{
 			return $this->text;
@@ -127,55 +125,14 @@
 		{
 			return $this->rowspan;
 		}
-
-		public function setText($text)
-		{
-			$this->text = $text;
-		}
-
-		public function setPlace($place)
-		{
-			$this->place = $place;
-		}
-
-		public function setAlign($align)
-		{
-			$this->align = $align;
-		}
-
-		public function setValign($valign)
-		{
-			$this->valign = $valign;
-		}
-
-		public function setColor($color)
-		{
-			$this->color = $color;
-		}
-
-		public function setBgcolor($bgcolor)
-		{
-			$this->bgcolor = $bgcolor;
-		}
-
-		public function setColspan($colspan)
-		{
-			$this->colspan = $colspan;
-		}
-
-		public function setRowspan($rowspan)
-		{
-			$this->rowspan = $rowspan;
-		}
-
 	
 		public function isValid()
 		{
-			return true;
+			return !$this->errors;
 		}	
 		public function getErrors()
 		{
-			return 'todo';
+			return $this->errors;
 		}	
 
 	}

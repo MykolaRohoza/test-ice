@@ -36,6 +36,7 @@
 		
 		protected function validateInputData($input_data)
 		{
+			count($this->cells);
 			foreach ($input_data as $index => $input_item) {
 				if($this->validateInputItem($input_item) && false !== $places = $this->getValidatedPlaces($input_item['cells'])){
 					
@@ -49,6 +50,9 @@
 					$this->errors[$index] = $this->last_error;
 					return false;
 				}
+			}
+			if(!empty($this->default_cells)){
+				$this->validateInputData($this->default_cells);
 			}
 			return true;
 		}
@@ -110,6 +114,7 @@
 			if($this->errors){
 				echo print_r ($this->errors, true);
 			}
+			
 			return $this->cells;
 		}
 		
