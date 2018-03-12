@@ -2,6 +2,8 @@
 	namespace Cells;
 	class Cell
 	{
+		protected $errors;
+		
 		protected $cols; 
 		protected $rows; 
 		
@@ -25,26 +27,7 @@
 		
 		protected function init($data, $places)
 		{
-			$tmp_places = array();
-			$places[] = 4;
-			$places[] = 5;
-			$places[] = 6;
-			$places[] = 7;
-			$places[] = 8;
-			$places[] = 9;
 
-			
-			/*
-			 * Произведение колличества отличающихся строк и колличества отличяющися столцов должно быть равно 
-			 * count($places)
-			 */
-			foreach ($places as $place) {
-				$num_row = floor(($place - 1)/ $this->cols) + 1; 
-				$num_cell = $place - $this->cols * ($num_row - 1); 
-				
-				$tmp_places[] = 'r' . $num_row . '|c' . $num_cell;
-			}
-			var_dump($tmp_places);
 			if($this->checkPlaces($places)){
 				$this->places = $places; 
 			} else {
@@ -75,15 +58,35 @@
 		}
 		protected function checkRectangle($places)
 		{
-			$places_li = count($places) -1;
-			for ($i = 0; $i <= $places_li; $i++) {
-				for ($j = $i+1; $j <= $places_li; $j++) {
-						echo "<br>$i<br>$j<br>";
-						var_dump($places[$i]);
-						var_dump($places[$j]);
+			$tmp_places = array();
+			
+			/*
+			 * Произведение колличества отличающихся строк и колличества отличяющися столцов должно быть равно 
+			 * count($places)
+			 */
+			$different_rows = [];
+			$different_cells = [];
+			
+			foreach ($places as $place) {
+				$num_row = floor(($place - 1)/ $this->cols) + 1; 
+				$num_cell = $place - $this->cols * ($num_row - 1); 
+				
+				if(!in_array($num_row, $different_rows)){
+					$different_rows[] = $num_row;
 				}
+				if(!in_array($num_cell, $different_cells)){
+					$different_cells[] = $num_cell;
+				}
+				
+				$tmp_places[] = 'r' . $num_row . '|c' . $num_cell;
+				var_dump('r' . $num_row . '|c' . $num_cell) ; echo '<br>';
 			}
-			die;
+			
+			if(count($places) != count($different_cells) * count($different_rows)){
+				$this->errors[] = 'Произведение колличества отличающихся строк и колличества отличяющися столцов должно быть равно count($places) ';
+			
+				return false;
+			}
 		}
 		public function getText()
 		{
