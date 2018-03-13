@@ -38,7 +38,7 @@
 			foreach ($input_data as $index => $input_item) {
 				if($this->validateInputItem($input_item) && false !== $places = $this->getValidatedPlaces($input_item['cells'])){
 					
-					$cell = new Cell($input_data, $places, $this->rows, $this->cols);
+					$cell = new Cell($input_item, $places, $this->rows, $this->cols);
 					if($cell->isValid()){
 						$this->cells[$cell->getMin()] = $cell;
 					} else {
