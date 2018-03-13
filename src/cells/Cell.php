@@ -36,16 +36,9 @@
 				die('<br> $places ' . print_r($places, true) . ' - ' . print_r($this->errors, true) . '<br>');
 			}
 			foreach ($data as $key => $value) {
-				if($key == 'text'){
-					var_dump(property_exists($this, 'text'));
-					var_dump(property_exists($this, $key));
-				}
-				
 				if(property_exists($this, $key)){
 					$this->{$key} = $value;
-				} else {
-//					var_dump($key, $value);
-				}
+				} 
 			}
 			
 		}
