@@ -24,7 +24,6 @@
 			
 			$this->setInputData($input_data);
 			$this->validateInputData($input_data);
-			$this->cells = $this->input_data;
 		}
 		protected function init($rows, $cols)
 		{
@@ -36,13 +35,12 @@
 		
 		protected function validateInputData($input_data)
 		{
-			count($this->cells);
 			foreach ($input_data as $index => $input_item) {
 				if($this->validateInputItem($input_item) && false !== $places = $this->getValidatedPlaces($input_item['cells'])){
 					
 					$cell = new Cell($input_data, $places, $this->rows, $this->cols);
 					if($cell->isValid()){
-						$this->cells[] = $cell;
+						$this->cells[$cell->getMin()] = $cell;
 					} else {
 						die($cell->getErrors());
 					}
@@ -52,8 +50,9 @@
 				}
 			}
 			if(!empty($this->default_cells)){
-				$this->validateInputData($this->default_cells);
+				return $this->validateInputData($this->default_cells);
 			}
+			ksort($this->cells);
 			return true;
 		}
 		protected function getValidatedPlaces($cells)

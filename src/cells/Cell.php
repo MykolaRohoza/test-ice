@@ -3,12 +3,13 @@
 	class Cell
 	{
 		protected $errors;
+		protected $is_debug = false;
 		
 		protected $cols; 
 		protected $rows; 
 		protected $different_cells = []; 
 		protected $different_rows = []; 
-		protected $text = "-";
+		protected $text = "";
 		/**
 		 * cells
 		 */
@@ -30,14 +31,21 @@
 		{
 
 			if($this->checkPlaces($places)){
-				$this->places = $places; 
+				$this->places = $places;
 			} else {
 				die('<br> $places ' . print_r($places, true) . ' - ' . print_r($this->errors, true) . '<br>');
 			}
 			foreach ($data as $key => $value) {
+				if($key == 'text'){
+					var_dump(property_exists($this, 'text'));
+					var_dump(property_exists($this, $key));
+				}
+				
 				if(property_exists($this, $key)){
 					$this->{$key} = $value;
-				} 
+				} else {
+//					var_dump($key, $value);
+				}
 			}
 			
 		}
@@ -69,7 +77,9 @@
 		}
 		protected function setDifferentSides($places)
 		{
-			$tmp_places = [];
+			if($this->is_debug){
+				$tmp_places = [];
+			}
 			foreach ($places as $place) {
 				$num_row = floor(($place - 1)/ $this->cols) + 1; 
 				$num_cell = $place - $this->cols * ($num_row - 1); 
@@ -80,12 +90,17 @@
 				if(!in_array($num_cell, $this->different_cells)){
 					$this->different_cells[] = $num_cell;
 				}
-				
-				$tmp_places[] = 'r' . $num_row . '|c' . $num_cell;
-				var_dump('r' . $num_row . '|c' . $num_cell) ; echo '<br>';
+				if($this->is_debug){
+					$tmp_places[] = 'r' . $num_row . '|c' . $num_cell;
+					var_dump('r' . $num_row . '|c' . $num_cell) ; echo '<br>';
+				}
 			}
 		}
 
+		public function getMin()
+		{
+			return min($this->places);
+		}
 		public function getText()
 		{
 			return $this->text;

@@ -20,8 +20,8 @@
     <body>
         <h1>ПЕРЕД ИСПОЛЬЗОВАНИЕМ ПОЧИНИТЬ</h1>
 			<div style="width: 300px; height: 300px;">
-				<?php foreach ($cells as $num => $cell) {?>
-					<div class="cell" style="width: 32%; height: 32%; "><?=$cell['text'] . " #" .  ($num + 1)?></div>
+				<?php foreach ($cells as $key_num => $cell) {?>
+					<div class="cell" style="width: 32%; height: 32%; "><?=$cell->getText() . " #" .  ($key_num)?></div>
 				<?php } ?>
 			</div>
     </body>
