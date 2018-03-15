@@ -9,6 +9,7 @@
 					"align"		=> "left",
 					"valign"	=> "top",
 					"color"		=> "fad413",
+//					"bgcolor"	=> "17541f"
 					"bgcolor"	=> "17541f"
 				],
 				[
