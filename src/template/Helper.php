@@ -3,6 +3,17 @@
 	
 	class Helper
 	{
+	 /**
+     * @assert (0) == -1
+     * @assert (1) == 0
+     * @assert (3) == 2
+     * @assert (2) == 1
+     * @assert (4) == 3
+     */
+		public function hz($data)
+		{
+			return $data - 1;
+		}
 		public static function view($file_name, $vars = array())
 		{
 			if(!is_file($file_name)) {

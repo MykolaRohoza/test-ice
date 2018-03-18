@@ -17,6 +17,7 @@
 	},
 	"scripts" : {
 		"php-ver" : "php -v"
+		
 	},
 	"remember" : {
 		"project" : "cd ../../../d/OpenServer/domains/test-ice"

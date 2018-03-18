@@ -58,7 +58,10 @@
 				$this->align = $this->getValidAlign($data['align']);
 			}
 			if(isset($data['color'])){
-				$this->align = $this->getValidAlign($data['align']);
+				$this->color = $this->getValidColor($data['color']);
+			}
+			if(isset($data['bgcolor'])){
+				$this->bgcolor = $this->getValidBgColor($data['bgcolor']);
 			}
 			
 			$this->colspan = count($this->different_cols);
@@ -72,6 +75,18 @@
 			$this->left = $this->getActualLeft();
 		}
 		
+		protected function getValidColor($color)
+		{
+			return $this->validColor($color);
+		}
+		protected function getValidBgColor($color)
+		{
+			return $this->validColor($color);
+		}
+		protected function validColor($color)
+		{
+			return '#' . preg_replace('[^0-9A_Fa-f]', '', $color);
+		}
 		protected function getValidValign($valign)
 		{
 			switch ($valign) {
